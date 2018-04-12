@@ -136,6 +136,9 @@ void loop() {
   if (MeteringButtonState == 0) {
     // Save setting if Metering button pressed.
     SaveSettings();
+
+    lux = 0;
+    refresh();
     
     if (meteringMode == 0) {
       // Ambient light meter mode.
