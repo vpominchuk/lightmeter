@@ -49,7 +49,7 @@ void footer() {
   Get light value
 */
 float getLux() {
-  uint16_t lux = lightMeter.readLightLevel(0);
+  uint16_t lux = lightMeter.readLightLevel(false);
 
   if (lux >= 65534) {
     // light sensor is overloaded.

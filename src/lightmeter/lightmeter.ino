@@ -86,7 +86,7 @@ void setup() {
   battVolts = getBandgap();  //Determins what actual Vcc is, (X 100), based on known bandgap voltage
 
   Wire.begin();
-  lightMeter.begin(BH1750::ONE_TIME_HIGH_RES_MODE);
+  lightMeter.begin(BH1750::ONE_TIME_HIGH_RES_MODE_2);
   //lightMeter.begin(BH1750::ONE_TIME_LOW_RES_MODE); // for low resolution but 16ms light measurement time.
 
   display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
@@ -142,7 +142,7 @@ void loop() {
     
     if (meteringMode == 0) {
       // Ambient light meter mode.
-      lightMeter.configure(BH1750::ONE_TIME_HIGH_RES_MODE);
+      lightMeter.configure(BH1750::ONE_TIME_HIGH_RES_MODE_2);
 
       lux = getLux();
 
@@ -155,40 +155,26 @@ void loop() {
       delay(200);
     } else if (meteringMode == 1) {
       // Flash light metering
-      lightMeter.configure(BH1750::ONE_TIME_LOW_RES_MODE);
+      lightMeter.configure(BH1750::CONTINUOUS_LOW_RES_MODE);
 
       unsigned long startTime = millis();
-      boolean firstFlashFired = false;
+      uint16_t currentLux = 0;
+      lux = 0;
 
-      float low = getLux();
-      float flashConst = 2;
-      float high = low * flashConst;
-
-      int afterFlashTries = 0;
-
-      while (startTime + MaxFlashMeteringTime > millis()) {
-        if (afterFlashTries >= 70) {
+      while (true) {
+        // check max flash metering time
+        if (startTime + MaxFlashMeteringTime < millis()) {
           break;
         }
 
-        lux = getLux();
-
-        if (lux > high) {
-          high = lux;
-          firstFlashFired = true;
-        } else {
-          if (firstFlashFired) {
-            afterFlashTries++;
-          }
+        currentLux = getLux();
+        delay(16);
+        
+        if (currentLux > lux) {
+          lux = currentLux;
         }
       }
 
-      if (afterFlashTries > 0) {
-        lux = high;
-      }else{
-        lux = low;
-      }
-      
       refresh();
     }
   }
