@@ -2,10 +2,12 @@
 A Lightmeter/Flashmeter for photographers, based on Arduino.
 
 Components:
-1. Arduino NANO v.3
-2. BH1750 light sensor
-3. SSD1306 128*96 OLED SPI Display
-4. Buttons
+1. Arduino NANO v.3 https://www.banggood.com/custlink/K3Kvbdnnea
+2. BH1750 light sensor https://www.banggood.com/custlink/GvGvnRNN0e
+3. SSD1306 128*64 OLED SPI Display https://www.banggood.com/custlink/DDKmsdAQ6z
+4. Buttons https://www.banggood.com/custlink/m3DGAYsnnY
+5. 50x70 PCB https://www.banggood.com/custlink/KvvvnybQAP
+6. AAA battery Holder https://www.banggood.com/custlink/vK3KsynANN
 
 Thanks @morozgrafix https://github.com/morozgrafix for creating schematic diagram for this device.
 
